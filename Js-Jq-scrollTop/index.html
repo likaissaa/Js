@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" href="css/base.css" />
+		<script type="text/javascript" src="js/jquery-1.11.3.min.js" ></script>
+		<script type="text/javascript" src="js/vue2.js" ></script>
+		<style>
+			body{
+				border:0px solid blue;
+				padding:20px;
+				border:5px solid red;
+				overflow-y:scroll;
+				height:1000px;
+			}
+			html{
+				
+			}
+			.divscroll{
+				position:fixed;
+				top:25%;
+				left:600px;
+				border:5px solid black;
+				border-radius: 5px;
+				background-color:#DDDDDD;
+				box-shadow: 0 2px 4px black;
+			}
+		</style>
+	</head>
+	<body id="body">
+		<div id="test">
+			<div class="divscroll">div-滚动距离<span id="divscroll"></span><br/>body-滚动距离<span id="bodyscroll"></span></div>
+		<div id="father" style="margin-left:20px;width:700px;height:600px;border:1px solid blue;overflow:auto;">
+			<div id="haha" style="border:10px solid red;width:600px;height:1000px;padding:10px;">
+				内边距：10px<br>
+				边框：10px <br>
+				宽度: 200px;<br>
+				高度: 1000px;<br>
+			</div>
+		</div>
+		</div>
+		<script>
+			//区别
+			/*clientWidth = width + padding
+			
+			clientHeight = height + padding
+			
+			offsetWidth = width + padding + border + 滚动条
+			
+			offsetHeight = width + padding + border + 滚动条*/
+			/**
+			 * document.body 获取 当前body的dom
+			 */
+			/**
+			 * js
+			 */
+			//获取元素的宽度，不包括边框，边距或滚动条（width + padding）
+			var clientw=document.getElementById("haha").clientWidth;
+			//获取元素的高度，不包括边框，边距或滚动条（height + padding）
+			var clienth=document.getElementById("haha").clientHeight;
+			//元素的宽度（width + padding + border + 滚动条）
+			var offsetw=document.getElementById("haha").offsetWidth;
+			//元素的高度（width + padding + border + 滚动条）
+			var offseth=document.getElementById("haha").offsetHeight;
+			//元素的距离最左边的宽度 (从元素的边框到最左边的距离)
+			var offsetleft=document.getElementById("haha").offsetLeft;
+			//元素的距离最左边的宽度 (从元素的边框到最顶部的距离)
+			var offsettop=document.getElementById("haha").offsetTop;
+			
+			//元素的滚动
+			
+			/*可是区域宽高*/			
+			var innerwidth=window.innerWidth
+			var innerheight=window.innerHeight
+			var outerwidth=window.outerWidth
+			var outerheight=window.outerHeight
+			var allwidth=document.documentElement.clientWidth
+			var allheight=document.documentElement.clientHeight
+			/**
+			 * jq
+			 */
+			 //jquery方式获取元素的宽度，不包括滚动条与工具条
+			var jqwidth=$("#haha").width();
+			 //jquery方式获取元素的高度，不包括滚动条与工具条
+			var jqheight=$("#haha").height();
+	        //jq 没有 offsetwidth 属性
+	        
+	     var scrollwidth=document.getElementById("father").scrollWidth;
+	     var scrollheight=document.getElementById("father").scrollHeight;
+	     /*document.getElementById("father").scrollTop=200;*/
+	    
+	    		/**/
+    	 	document.getElementById("father").onscroll=function(){
+ 				console.log("jq-div-scrollTop"+$("#father").scrollTop())
+ 				console.log("jq-div-scrollwidth"+document.getElementById("father").scrollWidth)
+ 				console.log("jq-div-scrollheight"+document.getElementById("father").scrollHeight)
+ 				document.getElementById("divscroll").innerHTML=document.getElementById("father").scrollTop
+	     	}
+	    	window.onscroll=function(){
+     			/*jq方法 $(window).scrollTop*/
+     			console.log("jq-body-scrollTop"+$(window).scrollTop())
+     			console.log("jq-body-scrollwidth"+document.body.scrollWidth)
+ 				console.log("jq-body-scrollheight"+document.body.scrollHeight)
+     			document.getElementById("bodyscroll").innerHTML=document.body.scrollTop
+	     	}
+	        
+	        
+	        
+	        
+	        
+	        
+	        
+			$("#haha").css("background-color","darkgrey")
+			console.log("元素div-client的高======"+clienth)
+			console.log("元素div-client的宽======"+clientw)
+			console.log("元素div元素 offsetleft的距离="+offsetleft)
+			console.log("元素div元素 offsettop的距离="+offsettop)
+			console.log("body的宽度"+document.body.offsetWidth+" "+"可视区域的全部宽度="+ innerwidth)
+			console.log("body的高度"+document.body.offsetHeight+" "+"可视区域的全部高度="+ innerheight)
+			console.log("body的宽度"+document.body.offsetWidth+" "+"可视区域的加工具条的全部宽度="+outerwidth)
+			console.log("body的高度"+document.body.offsetHeight+" "+"可视区域的加工具条的全部高度="+outerheight)
+			console.log("兼容性最好的可视区域的全部宽度"+allwidth)
+			console.log("兼容性最好的可视区域的全部高度"+allheight)
+			console.log("jq元素的高===="+jqheight)
+			console.log("jq元素的宽===="+jqwidth)
+			console.log("元素div 全部关联的高度"+offseth)
+			console.log("元素div 全部关联的宽度"+offsetw)
+			var html='\
+					<div>内边距：10px</div>\
+					<div>边框：10px</div>\
+					<div>宽度: 600px;</div>\
+					<div>高度: 1000px;</div>\
+					<div>元素div-client的高==========================='+clienth+'(padding+width)</div>\
+					<div>元素div-client的宽==========================='+clientw+'(padding+height)</div><br/>\
+					<div>元素div(border)-offsetleft的距离=================='+offsetleft+'(最左边)</div>\
+					<div>元素div(border)-offsettop的距离=================='+offsettop+'(最上边)</div><br/>\
+					<div>body的宽度'+document.body.offsetWidth+'+可视区域的全部宽度=========='+innerwidth+'(padding+width+border+滚动条)</div>\
+					<div>body的高度'+document.body.offsetHeight+'+可视区域的全部高度=========='+innerheight+'(padding+width+border+滚动条)</div><br/>\
+					<div>body的宽度'+document.body.offsetWidth+'+可视区域的加工具条的全部宽度=='+outerwidth+'(padding+width+border+滚动条+工具)</div>\
+					<div>body的高度'+document.body.offsetHeight+'+可视区域的加工具条的全部高度=='+outerheight+'(padding+width+border+滚动条+工具)</div><br/>\
+					<div>兼容性最好的可视区域的全部宽度============='+allwidth+'(html可视padding+width)</div>\
+					<div>兼容性最好的可视区域的全部高度============='+allheight+'(html可视padding+height)</div><br/>\
+					<div>jq元素的高==============================='+jqheight+'</div>\
+					<div>jq元素的宽==============================='+jqwidth+'</div><br/>\
+					<div>元素div 全部关联的高度===================='+offseth+'</div>\
+					<div>元素div 全部关联的宽度===================='+offsetw+'</div><br/>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>\
+					<div>123</div>';
+					document.getElementById("haha").innerHTML=html
+			        
+		</script>
+	</body>
+</html>
+<!--window.innerWidth //获取屏幕可视区域的宽度，包括边框，边距或滚动条，不包括工具条
+
+window.innerHeight //获取屏幕可视区域的高度，包括边框，边距或滚动条，不包括工具条
+
+window.outerWidth //获取屏幕可视区域的宽度，包括边框，边距或滚动条以及工具条
+
+window.outerHeight //获取屏幕可视区域的高度，包括边框，边距或滚动条以及工具条-->
+<!--
+	页可见区域宽： document.body.clientWidth;
+网页可见区域高： document.body.clientHeight;
+网页可见区域宽： document.body.offsetWidth   (包括边线的宽);
+网页可见区域高： document.body.offsetHeight (包括边线的宽);
+网页正文全文宽： document.body.scrollWidth;
+网页正文全文高： document.body.scrollHeight;
+网页被卷去的高： document.body.scrollTop;
+网页被卷去的左： document.body.scrollLeft;
+网页正文部分上： window.screenTop;
+网页正文部分左： window.screenLeft;
+屏幕分辨率的高： window.screen.height;
+屏幕分辨率的宽： window.screen.width;
+屏幕可用工作区高度： window.screen.availHeight;
+	
+	
+	
+-->
